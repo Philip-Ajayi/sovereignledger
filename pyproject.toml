@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=65.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sovereignledger"
+version = "1.0.0"
+description = "Air-gapped personal accounting agent executed in NVIDIA OpenShell kernel-enforced sandboxes."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "SovereignLedger Core Architecture Team" }]
+license = { text = "Apache-2.0" }
+dependencies = [
+    "duckdb>=0.9.2",
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "watchdog>=4.0.0",
+    "pydantic>=2.6.0",
+    "pydantic-settings>=2.1.0",
+    "rich>=13.7.0",
+    "textual>=0.50.0",
+    "httpx>=0.26.0",
+    "typer>=0.9.0",
+    "python-multipart>=0.0.9",
+    "cryptography>=42.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.2.0"
+]
+
+[project.scripts]
+sovereignledger = "src.cli:app"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

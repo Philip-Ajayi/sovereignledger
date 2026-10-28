@@ -1,0 +1,64 @@
+version: "0.1.2"
+name: "sovereignledger-sandbox"
+metadata:
+  description: "Kernel-enforced isolation sandbox for autonomous financial accounting agent"
+  author: "SovereignLedger Team"
+sandbox:
+  resources:
+    cpus: 4
+    memory: "6GB"
+  filesystem:
+    read_only:
+      - "/data/incoming"
+      - "/app"
+    read_write:
+      - "/db"
+      - "/skills"
+    tmpfs:
+      - "/tmp:size=256M"
+security:
+  landlock:
+    enabled: true
+    handled_access_fs:
+      - "execute"
+      - "write_file"
+      - "read_file"
+      - "read_dir"
+      - "make_reg"
+  seccomp:
+    default_action: "kill_process"
+    allowed_syscalls:
+      - "read"
+      - "write"
+      - "openat"
+      - "close"
+      - "fstat"
+      - "lseek"
+      - "mmap"
+      - "mprotect"
+      - "munmap"
+      - "brk"
+      - "rt_sigaction"
+      - "rt_sigprocmask"
+      - "ioctl"
+      - "futex"
+      - "exit_group"
+      - "epoll_create1"
+      - "epoll_ctl"
+      - "epoll_wait"
+      - "socket"
+      - "connect"
+      - "inotify_init1"
+      - "inotify_add_watch"
+      - "getrandom"
+network:
+  default_egress: "deny"
+  allowed_endpoints:
+    - host: "127.0.0.1"
+      ports: [11434]
+      protocol: "http"
+      description: "Local Ollama/llama.cpp inference loopback exclusively"
+audit:
+  log_blocked_syscalls: true
+  log_network_violations: true
+  audit_file: "/db/security_audit.log"

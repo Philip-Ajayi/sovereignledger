@@ -1,5 +1,4 @@
 """
-"""
 SovereignLedger Core Runtime Configuration.
 Governs isolation parameters, database destinations, and loopback LLM communication.
 """
